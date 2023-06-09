@@ -3,35 +3,26 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const cookieParser = require("cookie-parser");
-const multer = require("multer");
 const helmet = require("helmet");
-const morgan = require("morgan");
 const path = require("path");
 const bodyParser = require("body-parser");
-const connectdatabase = require("./db/mongodb");
+const cloudinary = require("cloudinary");
 
+const connectdatabase = require("./db/mongodb");
 const errorMiddleware = require("./error_handler/errorMiddleware");
-// all routes
 
 const user_routes = require("./routes/user_routes");
-
+const post_routes = require("./routes/post_routes");
 // CONFIGURATION
 
 PORT = process.env.PORT || 8000;
 ENV = process.env.NODE_ENV || "DEVELOPMENT";
 
-// file storage
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/assets");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
 });
-
-const upload = multer({ storage });
 
 // for handling uncaught Exception
 process.on("uncaughtException", (err) => {
@@ -53,11 +44,10 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
-app.use("/asserts", express.static(path.join(__dirname, "public/assets")));
-
 // all routes
 
 app.use("/api/user", user_routes);
+app.use("/api/post", post_routes);
 
 // Error Middleware
 app.use(errorMiddleware);

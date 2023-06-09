@@ -15,7 +15,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter your email"],
     unique: true,
-    validate: [validator.isEmail, "Please enter valid email address"],
+    validate: [
+      {
+        validator: validator.isEmail,
+        message: "Please enter a valid email address",
+      },
+      {
+        validator: (value) => value.endsWith("@somaiya.edu"),
+        message: "Email should be from @somaiya.edu domain",
+      },
+    ],
   },
   password: {
     type: String,
@@ -33,14 +42,16 @@ const userSchema = new mongoose.Schema({
       required: true,
     },
   },
+
   role: {
     type: String,
     default: "starter",
   },
-  // verify: {
-  //   type: String,
-  //   default: "no",
-  // },
+  friends: {
+    type: Array,
+    default: [],
+  },
+
   createdAt: {
     type: Date,
     default: Date.now,

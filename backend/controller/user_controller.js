@@ -44,6 +44,7 @@ exports.verifyEmail = wrapAsync(async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: `Email sent to: ${user.email}`,
+      value: message,
     });
   } catch (error) {
     user.resetVerifyToken = undefined;
@@ -86,14 +87,14 @@ exports.lastverifyEmail = wrapAsync(async (req, res, next) => {
 // registration
 exports.createuser = wrapAsync(async (req, res) => {
   const { name, email, password } = req.body;
+
+  avatar = { public_id: "12345789", url: "12dfdfdsfdsfdfdfbbbv" };
+
   const user = await User.create({
     name,
     email,
     password,
-    avatar: {
-      public_id: "gdfgdf",
-      url: "hgfhfghfghgfhfgfgh",
-    },
+    avatar,
     role: "starter",
   });
   sendToken(user, 201, res);
