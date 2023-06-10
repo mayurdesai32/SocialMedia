@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema({
         validator: validator.isEmail,
         message: "Please enter a valid email address",
       },
-      {
-        validator: (value) => value.endsWith("@somaiya.edu"),
-        message: "Email should be from @somaiya.edu domain",
-      },
+      // {
+      //   validator: (value) => value.endsWith("@somaiya.edu"),
+      //   message: "Email should be from @somaiya.edu domain",
+      // },
     ],
   },
   password: {
@@ -36,10 +36,13 @@ const userSchema = new mongoose.Schema({
     public_id: {
       type: String,
       required: true,
+      default: "default_id",
     },
     url: {
       type: String,
       required: true,
+      default:
+        "https://res.cloudinary.com/dmhcnhtng/image/upload/v1643044376/avatars/default_pic_jeaybr.png",
     },
   },
 

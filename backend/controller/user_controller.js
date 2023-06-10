@@ -88,7 +88,10 @@ exports.lastverifyEmail = wrapAsync(async (req, res, next) => {
 exports.createuser = wrapAsync(async (req, res) => {
   const { name, email, password } = req.body;
 
-  avatar = { public_id: "12345789", url: "12dfdfdsfdsfdfdfbbbv" };
+  avatar = {
+    public_id: "default_id",
+    url: "https://res.cloudinary.com/dmhcnhtng/image/upload/v1643044376/avatars/default_pic_jeaybr.png",
+  };
 
   const user = await User.create({
     name,

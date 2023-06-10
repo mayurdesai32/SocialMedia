@@ -54,18 +54,6 @@ router.post(
   commentsPost
 );
 
-// router.put(
-//   "/comment",
-//   isAuthenticatedUser,
-//   authorizeRoles("admin", "user"),
-//   comment
-// );
-// router.put(
-//   "/savePost/:id",
-//   isAuthenticatedUser,
-//   authorizeRoles("admin", "user"),
-//   savePost
-// );
 router.delete(
   "/deletepost/:id",
   isAuthenticatedUser,
